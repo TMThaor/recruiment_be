@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id        String     @id @default(uuid()) @db.VarChar(36)
+  username  String     @unique @db.VarChar(255)
+  role      String     @db.VarChar(50)
+  hash      String     @db.VarChar(255)
+  admin     Admin?
+  candidate Candidate?
+}
+
+model Candidate {
+  id           String         @id @default(uuid()) @db.VarChar(36)
+  account_id   String?        @unique @db.VarChar(36)
+  fullname     String?        @db.VarChar(255)
+  email        String?        @db.VarChar(255)
+  phoneNumber  String?        @db.VarChar(12)
+  dateOfBirth  DateTime?      @db.Date
+  education    String?        @db.VarChar(255)
+  applications Applications[]
+  account      Account?       @relation(fields: [account_id], references: [id], onDelete: Cascade)
+}
+
+model Admin {
+  id         String  @id @default(uuid()) @db.VarChar(36)
+  account_id String  @unique @db.VarChar(36)
+  fullname   String  @db.VarChar(255)
+  email      String? @db.VarChar(255)
+  account    Account @relation(fields: [account_id], references: [id], onDelete: Cascade)
+}
+
+model Jobs {
+  id                 String         @id @default(uuid()) @db.VarChar(36)
+  category_id        String         @db.VarChar(36)
+  title              String         @db.VarChar(255)
+  description        String         @db.VarChar(1000)
+  requirements       String         @db.VarChar(1000)
+  benefits           String         @db.VarChar(1000)
+  quantity           Int
+  location           String         @db.VarChar(255)
+  experienceRequired Int
+  jobType            String         @db.VarChar(100)
+  skills             String         @db.VarChar(255)
+  minSalary          Int?
+  maxSalary          Int?
+  level              String         @db.VarChar(255)
+  created_at         DateTime       @default(now()) @db.Timestamp(0)
+  expire_at          DateTime?      @db.Timestamp(0)
+  applications       Applications[]
+  category           Category       @relation(fields: [category_id], references: [id], onDelete: Cascade)
+}
+
+model Applications {
+  id            String    @id @default(uuid()) @db.VarChar(36)
+  candidate_id  String?   @db.VarChar(36)
+  job_id        String    @db.VarChar(36)
+  cv            String    @db.VarChar(255)
+  status        String    @default("Pending") @db.VarChar(50)
+  created_at    DateTime  @db.Timestamp(0)
+  updated_at    DateTime  @db.Timestamp(0)
+  dateOfBirth   DateTime? @db.Date
+  education     String?   @db.VarChar(255)
+  email         String?   @db.VarChar(255)
+  fullname      String?   @db.VarChar(255)
+  phoneNumber   String?   @db.VarChar(12)
+  interviewDate DateTime? @db.Timestamp(0)
+  interviewTime String?   @db.VarChar(255)
+  interviewType String?   @db.VarChar(255)
+  location      String?   @db.VarChar(255)
+  interviewer   String?   @db.VarChar(255)
+  offerSalary   String?
+  expectDate    DateTime? @db.Timestamp(0)
+  workLocation  String?   @db.VarChar(255)
+
+  candidate Candidate? @relation(fields: [candidate_id], references: [id], onDelete: Cascade)
+  job       Jobs       @relation(fields: [job_id], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id          String         @id @default(uuid()) @db.VarChar(36)
+  name        String         @db.VarChar(255)
+  created_at  DateTime       @db.Timestamp(0)
+  jobs        Jobs[]
+  subCategory Sub_Category[]
+}
+
+model Sub_Category {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  category_id String   @db.VarChar(36)
+  name        String   @db.VarChar(255)
+  created_at  DateTime @db.Timestamp(0)
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+}
+
+model Contacts {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  fullName   String   @db.VarChar(255)
+  email      String   @db.VarChar(255)
+  message    String   @db.VarChar(1000)
+  replyBy    String?  @db.VarChar(255)
+  created_at DateTime @db.Timestamp(0)
+  isReplied  Boolean  @default(false)
+}
+
+model Media {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  name       String   @db.VarChar(255)
+  type       String   @db.VarChar(50)
+  path       String   @db.VarChar(255)
+  created_at DateTime @db.Timestamp(0)
+}
+
+model Staff {
+  id       String @id @default(uuid()) @db.VarChar(36)
+  fullName String @db.VarChar(255)
+  position String @db.VarChar(255)
+  email    String @db.VarChar(255)
+  status   String @db.VarChar(50)
+}

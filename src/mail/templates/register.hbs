@@ -1,0 +1,61 @@
+<html lang='vi'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Ứng tuyển thành công</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        padding: 20px;
+      }
+      .email-container {
+        background-color: #ffffff;
+        padding: 30px;
+        max-width: 600px;
+        margin: auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+      .title {
+        font-size: 20px;
+        color: #1a202c;
+        margin-bottom: 20px;
+      }
+      .content {
+        font-size: 16px;
+        color: #4a5568;
+        line-height: 1.6;
+      }
+      .footer {
+        margin-top: 30px;
+        font-size: 14px;
+        color: #718096;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='email-container'>
+      <h2 class='title'>Chúc mừng bạn đã ứng tuyển thành công!</h2>
+      <div class='content'>
+        <p>Xin chào <strong>{{name}}</strong>,</p>
+
+        <p>Chúng tôi đã nhận được hồ sơ ứng tuyển của bạn cho vị trí
+          <strong>{{jobTitle}}</strong>.</p>
+
+        <p>Đội ngũ tuyển dụng sẽ xem xét hồ sơ và liên hệ lại với bạn trong thời
+          gian sớm nhất nếu bạn phù hợp.</p>
+
+        <p>Chân thành cảm ơn bạn đã quan tâm và nộp đơn ứng tuyển tại công ty
+          chúng tôi.</p>
+
+        <p>Trân trọng,<br />
+          Bộ phận Tuyển dụng</p>
+      </div>
+
+      <div class='footer'>
+        Email được gửi tự động. Vui lòng không phản hồi email này.
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+###Test
+GET http://localhost:8080/api/user
+
+###create user
+POST http://localhost:8080/api/user
+Content-Type: application/x-www-form-urlencoded
+
+name=thao&email=trieuthao115@gmail.com&hash=123456
+
+###findAll
+GET http://localhost:8080/api/user?skip=0&take=5
+
+
+###Update user
+PUT http://localhost:8080/api/user
+Content-Type: application/x-www-form-urlencoded
+
+id=1&name=Thuong
